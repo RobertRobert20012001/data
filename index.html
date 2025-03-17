@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ذخیره نام در دیتابیس</title>
+</head>
+<body>
+    <h2>فرم وارد کردن نام</h2>
+    <form id="nameForm">
+        <label for="name">نام خود را وارد کنید:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">ذخیره</button>
+    </form>
+
+    <script>
+        document.getElementById('nameForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // جلوگیری از ارسال فرم به روش معمول
+
+            var name = document.getElementById('name').value;
+
+            // استفاده از Fetch API برای ارسال داده به فایل PHP شما در InfinityFree
+            fetch('http://dd.fwh.is/insert.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'name=' + encodeURIComponent(name)  // ارسال داده نام
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);  // نمایش پیامی که PHP ارسال می‌کند
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
